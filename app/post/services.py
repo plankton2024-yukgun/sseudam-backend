@@ -3,11 +3,21 @@ from sqlalchemy.orm import Session
 from fastapi import UploadFile
 from typing import List, Dict
 from sqlalchemy import extract
-
+import boto3
 from .models import Post
 from .schemas import PostCreate
+from ..core.config import settings
 
-UPLOAD_DIR = "images/"
+# UPLOAD_DIR = os.getenv("UPLOAD_DIR")
+
+# AWS S3 설정
+S3_BASE_URL = f"https://{settings.S3_BUCKET}.s3.{settings.S3_REGION}.amazonaws.com/"
+
+# S3 클라이언트 생성
+s3_client = boto3.client(
+    "s3",
+    region_name=settings.S3_REGION,
+)
 
 
 def create_post(db: Session, post: PostCreate):
@@ -32,18 +42,31 @@ def get_post(db: Session, post_id: int):
     return db.query(Post).filter(Post.id == post_id).first()
 
 
-def save_image_locally(image: UploadFile):
-    # 저장할 파일 경로 생성
-    if not os.path.exists(UPLOAD_DIR):  # 경로가 존재하지 않으면
-        os.makedirs(UPLOAD_DIR)  # 디렉토리 생성
+# def save_image_locally(image: UploadFile):
+#     # 저장할 파일 경로 생성
+#     if not os.path.exists(UPLOAD_DIR):  # 경로가 존재하지 않으면
+#         os.makedirs(UPLOAD_DIR)  # 디렉토리 생성
+#
+#     file_path = os.path.join(UPLOAD_DIR, image.filename)
+#
+#     # 파일을 지정한 경로에 저장
+#     with open(file_path, "wb") as buffer:
+#         buffer.write(image.file.read())
+#
+#     return file_path
 
-    file_path = os.path.join(UPLOAD_DIR, image.filename)
 
-    # 파일을 지정한 경로에 저장
-    with open(file_path, "wb") as buffer:
-        buffer.write(image.file.read())
+def save_image_to_s3(image: UploadFile):
+    # S3에 저장할 파일 경로
+    file_path = f"images/{image.filename}"
 
-    return file_path
+    # S3에 파일 업로드
+    s3_client.upload_fileobj(
+        image.file, settings.S3_BUCKET, file_path, ExtraArgs={"ACL": "public-read"}
+    )
+
+    # 업로드된 파일의 URL 반환
+    return S3_BASE_URL + file_path
 
 
 def get_posts_by_month(

@@ -25,8 +25,9 @@ async def upload_post(
 
 @router.post("/upload-image", tags=["Post"])
 async def upload_image(image: UploadFile = File(...)):
-    image_path = services.save_image_locally(image)
-    return {"image_url": image_path}
+    image_url = services.save_image_to_s3(image)
+    # image_path = services.save_image_locally(image)
+    return {"image_url": image_url}
 
 
 @router.get("/", tags=["Post"], response_model=schemas.PostResponse)
