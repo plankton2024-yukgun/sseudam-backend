@@ -7,7 +7,7 @@ from sqlalchemy import extract
 from .models import Post
 from .schemas import PostCreate
 
-UPLOAD_DIR = "uploaded_images/"
+UPLOAD_DIR = "images/"
 
 
 def create_post(db: Session, post: PostCreate):
@@ -33,9 +33,16 @@ def get_post(db: Session, post_id: int):
 
 
 def save_image_locally(image: UploadFile):
+    # 저장할 파일 경로 생성
+    if not os.path.exists(UPLOAD_DIR):  # 경로가 존재하지 않으면
+        os.makedirs(UPLOAD_DIR)  # 디렉토리 생성
+
     file_path = os.path.join(UPLOAD_DIR, image.filename)
+
+    # 파일을 지정한 경로에 저장
     with open(file_path, "wb") as buffer:
         buffer.write(image.file.read())
+
     return file_path
 
 
