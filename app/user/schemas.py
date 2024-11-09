@@ -18,6 +18,16 @@ class UserResponse(BaseModel):
         from_attributes = True
 
 
+class UserDetailResponse(BaseModel):
+    id: int
+    username: str
+    level: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 class UserPostsResponse(BaseModel):
     user: UserResponse
     posts: List[PostResponse]
