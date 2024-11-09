@@ -66,21 +66,9 @@ level_thresholds = [
 
 
 def calculate_level(plogging_count):
-    # 각 횟수 기준에 맞는 계급을 순서대로 확인
+    # 기준에 맞는 계급을 순서대로 확인
     for level, threshold in enumerate(level_thresholds):
         if plogging_count < threshold:
             return level - 1
-    # 최상위 계급은 모든 기준을 초과하는 경우
+    # 모든 기준을 초과하는 경우는 최상위 계급
     return len(level_thresholds) - 1
-
-
-# def get_user_posts(db: Session, user_id: int, page: int, limit: int):
-#     skip = (page - 1) * limit
-#     posts = (
-#         db.query(post_models.Post)
-#         .filter(post_models.Post.user_id == user_id)
-#         .offset(skip)
-#         .limit(limit)
-#         .all()
-#     )
-#     return posts

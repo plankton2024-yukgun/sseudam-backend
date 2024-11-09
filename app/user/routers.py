@@ -20,17 +20,3 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @router.get("/{user_id}", tags=["User"], response_model=schemas.UserDetailResponse)
 def get_user(user_id: int, db: Session = Depends(get_db)):
     return services.get_user(db, user_id)
-
-
-@router.get(
-    "/{user_id}/posts/", tags=["User"], response_model=List[schemas.PostResponse]
-)
-def get_user_posts(user_post: schemas.UserPostsRequest, db: Session = Depends(get_db)):
-    return services.get_user_posts(db, user_post)
-
-
-# @router.get("/users/{user_id}/posts/", tags=["User"], response_model=List[schemas.PostResponse])
-# def get_user_posts(
-#     user_id: int, page: int = 1, limit: int = 10, db: Session = Depends(get_db)
-# ):
-#     return services.get_user_posts(db, user_id, page, limit)

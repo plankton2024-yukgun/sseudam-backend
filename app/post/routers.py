@@ -48,15 +48,6 @@ def get_calendar(calendar: schemas.CalendarRequest, db: Session = Depends(get_db
     )
 
 
-# @router.get("/calendar", response_model=schemas.CalendarResponse, tags=["Post"])
-# def get_calendar(user_id: int, year: int, month: int, db: Session = Depends(get_db)):
-#     days_with_posts = services.get_posts_by_month(user_id, month, year, db)
-#
-#     return schemas.CalendarResponse(
-#         month=month, year=year, days_with_posts=days_with_posts
-#     )
-
-
 # @router.get("/", tags=["Post"], response_model=list[schemas.PostResponse])
 # def get_posts(
 #     board_type: str = "post",
