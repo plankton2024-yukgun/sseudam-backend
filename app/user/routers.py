@@ -7,6 +7,11 @@ from typing import List
 router = APIRouter()
 
 
+@router.get("/users/", response_model=List[schemas.UserResponse])
+def get_all_users(db: Session = Depends(get_db)):
+    return services.get_all_users(db)
+
+
 @router.post("/users/", response_model=schemas.UserResponse)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return services.create_user(db, user)

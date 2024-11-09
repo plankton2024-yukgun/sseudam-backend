@@ -7,6 +7,10 @@ from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
+def get_all_users(db: Session):
+    return db.query(models.User).all()
+
+
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = pwd_context.hash(user.password)
     db_user = models.User(username=user.username, hashed_password=hashed_password)
@@ -25,12 +29,11 @@ def get_user(db: Session, user_id: int):
 
 def get_user_posts(db: Session, user_post: schemas.UserPostsRequest):
     posts = (
-        db.query(models.Post)
-        .filter(models.Post.user_id == user_post.user_id)
-        .filter(models.Post.board_type == user_post.board_type)
+        db.query(post_models.Post)
+        .filter(post_models.Post.user_id == user_post.user_id)
+        .filter(post_models.Post.board_type == user_post.board_type)
         .all()
     )
-
     return posts
 
 
