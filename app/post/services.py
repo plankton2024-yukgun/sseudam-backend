@@ -8,8 +8,6 @@ from .models import Post
 from .schemas import PostCreate
 from ..core.config import settings
 
-# UPLOAD_DIR = os.getenv("UPLOAD_DIR")
-
 # AWS S3 설정
 S3_BASE_URL = f"https://{settings.S3_BUCKET}.s3.{settings.S3_REGION}.amazonaws.com/"
 
@@ -44,10 +42,10 @@ def get_post(db: Session, post_id: int):
 
 # def save_image_locally(image: UploadFile):
 #     # 저장할 파일 경로 생성
-#     if not os.path.exists(UPLOAD_DIR):  # 경로가 존재하지 않으면
-#         os.makedirs(UPLOAD_DIR)  # 디렉토리 생성
+#     if not os.path.exists(settings.UPLOAD_DIR):  # 경로가 존재하지 않으면
+#         os.makedirs(settings.UPLOAD_DIR)  # 디렉토리 생성
 #
-#     file_path = os.path.join(UPLOAD_DIR, image.filename)
+#     file_path = os.path.join(settings.UPLOAD_DIR, image.filename)
 #
 #     # 파일을 지정한 경로에 저장
 #     with open(file_path, "wb") as buffer:
