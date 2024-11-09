@@ -3,9 +3,8 @@ from . import models, schemas
 from fastapi import HTTPException
 
 
-def add_like(db: Session, post_id: int):
-    # 실제 구현에서는 현재 로그인한 사용자의 ID를 사용해야 합니다.
-    user_id = 1  # 임시로 고정된 사용자 ID 사용
+def add_like(db: Session, post_id: int, user_id: int):
+    user_id = user_id
     like = models.Like(user_id=user_id, post_id=post_id)
     db.add(like)
     db.commit()
@@ -14,9 +13,7 @@ def add_like(db: Session, post_id: int):
     return {"post_id": post_id, "like_count": like_count}
 
 
-def remove_like(db: Session, post_id: int):
-    # 실제 구현에서는 현재 로그인한 사용자의 ID를 사용해야 합니다.
-    user_id = 1  # 임시로 고정된 사용자 ID 사용
+def remove_like(db: Session, post_id: int, user_id: int):
     like = (
         db.query(models.Like)
         .filter(models.Like.user_id == user_id, models.Like.post_id == post_id)
@@ -30,11 +27,9 @@ def remove_like(db: Session, post_id: int):
     return {"post_id": post_id, "like_count": like_count}
 
 
-def create_comment(db: Session, post_id: int, comment: schemas.CommentCreate):
-    # 실제 구현에서는 현재 로그인한 사용자의 ID를 사용해야 합니다.
-    user_id = 1  # 임시로 고정된 사용자 ID 사용
+def create_comment(db: Session, comment: schemas.CommentCreate):
     db_comment = models.Comment(
-        content=comment.content, user_id=user_id, post_id=post_id
+        content=comment.content, user_id=comment.user_id, post_id=comment.post_id
     )
     db.add(db_comment)
     db.commit()
@@ -42,12 +37,8 @@ def create_comment(db: Session, post_id: int, comment: schemas.CommentCreate):
     return db_comment
 
 
-def delete_comment(db: Session, post_id: int, comment_id: int):
-    comment = (
-        db.query(models.Comment)
-        .filter(models.Comment.id == comment_id, models.Comment.post_id == post_id)
-        .first()
-    )
+def delete_comment(db: Session, comment_id: int):
+    comment = db.query(models.Comment).filter(models.Comment.id == comment_id).first()
     if not comment:
         raise HTTPException(status_code=404, detail="Comment not found")
     db.delete(comment)
