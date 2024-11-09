@@ -6,7 +6,7 @@ from app.db import get_db
 router = APIRouter()
 
 
-@router.get("/", response_model=list[schemas.PostResponse])
+@router.get("/", tags=["Post"], response_model=list[schemas.PostResponse])
 def get_posts(
     board_type: str = "post",
     db: Session = Depends(get_db),
@@ -15,7 +15,7 @@ def get_posts(
     return posts
 
 
-# @router.get("/", response_model=list[schemas.PostResponse])
+# @router.get("/", tags=["Post"], response_model=list[schemas.PostResponse])
 # def get_posts(
 #     board_type: str = "post",
 #     page: int = 1,
@@ -27,7 +27,7 @@ def get_posts(
 #     return posts
 
 
-@router.post("/", response_model=schemas.PostResponse)
+@router.post("/", tags=["Post"], response_model=schemas.PostResponse)
 async def upload_post(
     board_type: str,
     content: str,
@@ -42,7 +42,7 @@ async def upload_post(
     return services.create_post(db=db, post=post)
 
 
-@router.get("/{post_id}", response_model=schemas.PostResponse)
+@router.get("/{post_id}", tags=["Post"], response_model=schemas.PostResponse)
 def get_post(post_id: int, db: Session = Depends(get_db)):
     post = services.get_post(db=db, post_id=post_id)
     if not post:

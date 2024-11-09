@@ -8,9 +8,9 @@ init_dev_db()
 
 app = FastAPI(title="Sseudam API")
 
-app.include_router(post_router)
-app.include_router(interaction_router)
-app.include_router(user_router)
+app.include_router(post_router, prefix="/posts")
+app.include_router(interaction_router, prefix="/posts")
+app.include_router(user_router, prefix="/users")
 
 
 @app.get("/")
