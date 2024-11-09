@@ -13,6 +13,7 @@ def add_like(post_id: int, db: Session = Depends(get_db)):
     return services.add_like(db, post_id)
 
 
+# TODO: 구현 필요
 @router.delete(
     "/{post_id}/like", tags=["Interaction"], response_model=schemas.LikeResponse
 )
