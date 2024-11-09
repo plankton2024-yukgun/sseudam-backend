@@ -23,7 +23,6 @@ async def upload_post(
     return services.create_post(db=db, post=post)
 
 
-# TODO: 구현 필요
 @router.post("/upload-image", tags=["Post"])
 async def upload_image(image: UploadFile = File(...)):
     image_path = services.save_image_locally(image)
