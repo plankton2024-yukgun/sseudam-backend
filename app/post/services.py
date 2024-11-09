@@ -29,7 +29,7 @@ def get_posts(db: Session, board_type: str):
 
 
 def get_post(db: Session, post_id: int):
-    return db.query(Post).filter(Post.post_id == post_id).first()
+    return db.query(Post).filter(Post.id == post_id).first()
 
 
 def save_image_locally(image: UploadFile):
