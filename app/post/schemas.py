@@ -10,7 +10,7 @@ class PostCreate(BaseModel):
 
 
 class PostResponse(BaseModel):
-    post_id: int
+    id: int
     board_type: str
     content: str
     location: str
