@@ -24,16 +24,6 @@ def get_posts(db: Session, board_type: str):
     return db.query(Post).filter(Post.board_type == board_type).all()
 
 
-# def get_posts(db: Session, board_type: str, skip: int = 0, limit: int = 10):
-#     return (
-#         db.query(Post)
-#         .filter(Post.board_type == board_type)
-#         .offset(skip)
-#         .limit(limit)
-#         .all()
-#     )
-
-
 def get_post(db: Session, post_id: int):
     return db.query(Post).filter(Post.post_id == post_id).first()
 
@@ -43,3 +33,13 @@ def save_image_locally(image: UploadFile):
     with open(file_path, "wb") as buffer:
         buffer.write(image.file.read())
     return file_path
+
+
+# def get_posts(db: Session, board_type: str, skip: int = 0, limit: int = 10):
+#     return (
+#         db.query(Post)
+#         .filter(Post.board_type == board_type)
+#         .offset(skip)
+#         .limit(limit)
+#         .all()
+#     )
