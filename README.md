@@ -2,12 +2,18 @@
 
 ## Description
 
-FastAPI로 구축된 Sseudam의 서버입니다.
+FastAPI로 구축된 쓰담의 서버입니다.
 
 
 ### Built with
 
 * [![FastAPI]][FastAPI-url]
+* [![Amazon-S3]][Amazon-S3-url]
+* [![Amazon-RDS]][Amazon-RDS-url]
+* [![Railway]][Railway-url]
+
+### Architecture
+![backend-architecture](/assets/sseudam-backend-architecture.png)
 
 
 ## Prerequisites
@@ -50,3 +56,9 @@ http://localhost:8000/docs
 <!-- MARKDOWN LINKS & IMAGES -->
 [FastAPI]: https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white
 [FastAPI-url]: https://fastapi.tiangolo.com/
+[Amazon-S3]: https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white
+[Amazon-S3-url]: https://aws.amazon.com/ko/s3/
+[Amazon-RDS]: https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white
+[Amazon-RDS-url]: https://aws.amazon.com/ko/rds/
+[Railway]: https://img.shields.io/badge/railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white
+[Railway-url]: https://railway.app/
